@@ -14,12 +14,10 @@ editor.setOptions({
     fontSize: "16pt"
 });
 
-editor.insert("moveForward();\n");
-editor.insert("moveForward();\n");
-editor.insert("turnLeft();\n");
-editor.insert("moveForward()");
+editor.insert("function start() {\n\t")
+editor.insert("moveForward();\n")
+editor.insert("}")
 editor.resize();
-
 
 async function setup() {
 
