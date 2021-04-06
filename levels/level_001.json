@@ -1,0 +1,77 @@
+{
+    "levelName": "Roombas first steps",
+    "field": {
+        "x": 10,
+        "y": 10
+    },
+    "roomba": {
+        "x": 2 ,
+        "y": 1,
+        "direction": "down"
+    },
+    "walls": [
+        {
+            "startX": 3,
+            "endX": 5,
+            "startY": 2,
+            "endY": 2
+        },
+        {
+            "startX": 3,
+            "endX": 5,
+            "startY": 4,
+            "endY": 4
+        },
+        {
+            "startX": 3,
+            "endX": 3,
+            "startY": 2,
+            "endY": 4
+        },
+        {
+            "startX": 0,
+            "endX": 0,
+            "startY": 0,
+            "endY": 10
+        },
+        {
+            "startX": 10,
+            "endX": 10,
+            "startY": 0,
+            "endY": 10
+        },
+        {
+            "startX": 0,
+            "endX": 10,
+            "startY": 10,
+            "endY": 10
+        },
+        {
+            "startX": 0,
+            "endX": 10,
+            "startY": 0,
+            "endY": 0
+        }
+        
+    ],
+    "diamonds": [
+        {
+            "x": 8,
+            "y": 8
+        }
+    ],
+    "stains": [
+        {
+            "x": 4,
+            "y": 4
+        },
+        {
+            "x": 4,
+            "y": 3
+        },
+        {
+            "x": 5,
+            "y": 3
+        }
+    ]
+}
