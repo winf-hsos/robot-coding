@@ -1,8 +1,8 @@
-async function moveForward() {
+async function moveForward(pos) {
     commandInProgress = true;
-    if (frontIsClear()) {
+    if (await frontIsClear() === true) {
         // Animate move forward and get new level state
-        postMessage({ command: "moveForward" });
+        postMessage({ command: "moveForward", position: pos });
 
         // Wait for the animation to complete
         await _waitForCommand();
@@ -15,15 +15,15 @@ async function moveForward() {
     }
 }
 
-async function turnLeft() {
+async function turnLeft(pos) {
     commandInProgress = true;
-    postMessage({ command: "turnLeft" });
+    postMessage({ command: "turnLeft", position: pos });
     await _waitForCommand();
 }
 
-async function turnRight() {
+async function turnRight(pos) {
     commandInProgress = true;
-    postMessage({ command: "turnRight" });
+    postMessage({ command: "turnRight", position: pos });
     await _waitForCommand();
 }
 

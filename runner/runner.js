@@ -39,16 +39,17 @@ onmessage = async function (e) {
 }
 
 // Central wrapper function to execute built-in commands
-async function runCommand(command, location) {
+async function runCommand(command, editorStartLine, editorStartCol, editorEndLine, editorEndCol) {
+    let pos = { startLine: editorStartLine, startCol: editorStartCol, endLine: editorEndLine, endCol: editorEndCol };
     switch (command) {
         case 'moveForward':
-            moveForward();
+            await moveForward(pos);
             break;
         case 'turnLeft':
-            turnLeft();
+            await turnLeft(pos);
             break;
         case 'turnRight':
-            turnRight();
+            await turnRight(pos);
             break;
         default:
             break;

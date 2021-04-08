@@ -21,7 +21,7 @@ class Roomba {
 
     // Animates a move forward and returns the new JSON
     async moveForward() {
-        await this._animateMove(10);
+        await this._animateMove();
 
         // Adjust the field coordinates
         switch (this.direction) {
@@ -43,13 +43,13 @@ class Roomba {
 
     // Animates a turn left and returns the new JSON
     async turnLeft() {
-        await this._animateTurn("left", 10);
+        await this._animateTurn("left");
         return this.data();
     }
 
     // Animates a turn right and returns the new JSON
     async turnRight() {
-        await this._animateTurn("right", 10);
+        await this._animateTurn("right");
         return this.data();
     }
 
@@ -84,7 +84,7 @@ class Roomba {
         drawingContext.drawImage(image, - 20, - 20, 40, 40);
     }
 
-    async _animateMove(speed) {
+    async _animateMove() {
         for (var i = 0; i < 50; i++) {
 
             switch (this.direction) {
@@ -102,13 +102,13 @@ class Roomba {
                     break;
             }
 
-            await this._sleep(speed);
+            await this._sleep((10 - speed) * 2);
         }
 
 
     }
 
-    async _animateTurn(direction, speed) {
+    async _animateTurn(direction) {
 
         for (var i = 0; i < 90; i++) {
 
@@ -125,7 +125,7 @@ class Roomba {
                     break;
             }
 
-            await this._sleep(speed);
+            await this._sleep((10 - speed) * 2);
         }
 
         if (this.direction === "left" && direction === "left")

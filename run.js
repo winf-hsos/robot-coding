@@ -3,8 +3,6 @@ var runner;
 var paused = false;
 var running = false;
 
-// 1 = slow, 10 = super fast
-var speed = 1;
 var waitBetweenSteps = 250;
 var animationTime = 10;
 
@@ -15,9 +13,13 @@ function setupRunner() {
 
 async function receiveCommand(e) {
     var command = e.data.command;
+    var pos = e.data.position;
+
+    if (pos)
+        editor.gotoLine(pos.startLine);
 
     //console.log(`Received command >${command}<`);
-    let sleepTime = 200;
+    let sleepTime = Math.round((10 - speed) * 50);
 
     switch (command) {
         case "moveForward":
@@ -139,9 +141,21 @@ function makeCommandsAsync(code) {
     awaitCalls = [];
     parsed = esprima.parse(asyncCode, { range: true, loc: true }, checkNode);
 
-    // Replace all calls with the "await" version
     awaitCalls.sort((a, b) => { return b.end - a.end }).forEach(n => {
-        asyncCode = asyncCode.slice(0, n.start) + "await " + asyncCode.slice(n.start);
+
+        if (isBuiltInCommand(n.command)) {
+            // Wrap all built-in commands with runCommand()
+            asyncCode = asyncCode.slice(0, n.start) + "await runCommand('" + n.command + "', " +
+                n.editorPosition.start.line + ", " +
+                n.editorPosition.start.column + ", " +
+                n.editorPosition.end.line + ", " +
+                n.editorPosition.end.column
+                + ")" + asyncCode.slice(n.end);
+        }
+        else {
+            // Replace all other calls with the "await" version
+            asyncCode = asyncCode.slice(0, n.start) + "await " + asyncCode.slice(n.start);
+        }
     });
 
     console.dir(asyncCode);
@@ -149,6 +163,10 @@ function makeCommandsAsync(code) {
     return asyncCode;
 }
 
+function isBuiltInCommand(command) {
+    let commands = ["moveForward", "turnLeft", "turnRight", "turnAround"]
+    return commands.includes(command);
+}
 
 function checkNode(node, meta) {
 
@@ -157,13 +175,14 @@ function checkNode(node, meta) {
         if (typeof node.callee.name !== "undefined") {
             awaitCalls.push({
                 start: meta.start.offset,
-                end: meta.end.offset
+                end: meta.end.offset,
+                editorPosition: { start: node.loc.start, end: node.loc.end },
+                command: node.callee.name
             });
         }
     }
     else if (node.type === "FunctionDeclaration") {
         if (node.async === false) {
-            console.dir(node);
             asyncFunctionDeclarations.push({
                 start: meta.start.offset,
                 end: meta.end.offset

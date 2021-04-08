@@ -35,7 +35,6 @@ class Level {
         let roomba = new Roomba(data.roomba.x, data.roomba.y, data.roomba.direction);
         this.addRoomba(roomba)
 
-
         this.margin = 5;
     }
 

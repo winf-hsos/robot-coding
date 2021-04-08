@@ -1,3 +1,4 @@
 async function frontIsClear() {
-    return await level.roomba.frontIsClear();
+    let frontClear = await level.roomba.frontIsClear();
+    return frontClear;
 }

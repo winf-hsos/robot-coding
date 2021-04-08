@@ -25,12 +25,20 @@
 
         .btn-light {
             background-color: #f0f0f0 !important;
-            border-color: #f0f0f0 !important;;
+            border-color: #f0f0f0 !important;
+            ;
         }
 
-        .form-control:disabled, .form-control[readonly] {
+        .form-control:disabled,
+        .form-control[readonly] {
             background-color: #f0f0f0 !important;
 
+        }
+
+        .myMarker {
+            position: absolute;
+            background: yellow;
+            z-index: 20
         }
     </style>
 
@@ -53,10 +61,15 @@
             <div class="col">
                 <div class="btn-group" role="group">
                     <button id="runBtn" type="button" class="btn btn-light" onclick="run()">Run</button>
-                    <button id="togglePauseBtn" type="button" class="btn btn-light" onclick="togglePause()" disabled>Pause</button>
+                    <button id="togglePauseBtn" type="button" class="btn btn-light" onclick="togglePause()"
+                        disabled>Pause</button>
                     <button id="resetBtn" type="button" class="btn btn-light" onclick="reset()">Reset</button>
-                  </div>
-                
+                </div>
+
+
+            </div>
+            <div class="col text-center">
+                <input type="range" class="form-range" min="1" max="10" onchange="speedChanged()" id="speedRange">
             </div>
         </div>
 
@@ -90,7 +103,7 @@
     <script src="setup.js"></script>
     <script src="run.js"></script>
     <script src="draw.js"></script>
-   
+
 </body>
 
 </html>
